@@ -1,0 +1,6 @@
+version: "1"
+services:
+	backend:
+		image: rails
+	frontend:
+		image: rails
