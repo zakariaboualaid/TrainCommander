@@ -2,6 +2,8 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+
+  trains = Train.create([{id: 1,name: "T1", city: "Casablanca", capacity: 300},
+    {id: 2, name: "T2", city: "Rabat", capacity: 320},
+    {id: 3, name: "T3", city: "Marrakech", capacity: 230},
+    {id: 4, name: "T4", city: "Agadir", capacity: 220}])
