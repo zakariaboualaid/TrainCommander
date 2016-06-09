@@ -1,7 +1,7 @@
 version: '2'
 services:
   frontend:
-    command: npm start NODE_ENV=production
+    command: npm start
     build: traincommander_webclient/.
     volumes:
      - ./traincommander_webclient/:/frontend
