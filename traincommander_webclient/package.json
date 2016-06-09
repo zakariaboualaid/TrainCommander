@@ -8,11 +8,7 @@
   },
   "author": "Zakaria Boualaid",
   "license": "MIT",
-  "dependencies": {
-    "babel-preset-react": "^6.5.0",
-    "babelify": "^7.3.0",
-    "browserify": "^13.0.1",
-    "express": "^4.13.4",
+  "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.0",
     "gulp-react": "^3.1.0",
@@ -20,13 +16,19 @@
     "gulp-server-livereload": "^1.8.0",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.6",
+    "watchify": "^3.7.0",
     "node-notifier": "^4.6.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "dependencies": {
+    "babel-preset-react": "^6.5.0",
+    "babelify": "^7.3.0",
+    "browserify": "^13.0.1",
+    "express": "^4.13.4",
     "react": "^15.1.0",
     "react-dom": "^15.1.0",
     "react-router": "^2.4.1",
     "reactify": "^1.1.1",
-    "vinyl-source-stream": "^1.1.0",
-    "watchify": "^3.7.0",
     "whatwg-fetch": "^1.0.0"
   }
 }
