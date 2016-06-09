@@ -5,8 +5,8 @@ RUN chown -R root:root /backend
 ADD Gemfile /backend/Gemfile
 ADD Gemfile.lock /backend/Gemfile.lock
 WORKDIR /backend
-RUN bundle install --without development test
 ENV RAILS_ENV production
 ENV RACK_ENV production
+RUN bundle install --without development test
 ADD . /backend
 CMD bundle exec puma -C config/puma.rb

@@ -1,6 +1,7 @@
 version: '2'
 services:
   frontend:
+    command: npm start
     build: traincommander_webclient/.
     volumes:
      - ./traincommander_webclient/:/frontend
@@ -8,6 +9,7 @@ services:
       - "8000:8000"
   backend:
     build: traincommander_api/.
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
     volumes:
       - ./traincommander_api/:/backend
     ports:
