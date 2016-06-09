@@ -12,3 +12,7 @@ services:
       - ./traincommander_api/:/backend
     ports:
       - "3000:3000"
+  # bundle:
+  #   image: traincommander_backend
+  #   volumes:
+  #     - ./traincommander_api/:/backend
