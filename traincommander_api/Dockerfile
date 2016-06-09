@@ -7,5 +7,5 @@ ADD Gemfile.lock /backend/Gemfile.lock
 WORKDIR /backend
 ENV RAILS_ENV production
 ENV RACK_ENV production
-RUN bundle install
+RUN bundle install --without development test
 ADD . /backend
