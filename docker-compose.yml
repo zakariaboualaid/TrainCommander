@@ -3,8 +3,6 @@ services:
   frontend:
     command: npm start
     build: traincommander_webclient/.
-    volumes:
-     - ./traincommander_webclient/:/frontend
     ports:
       - "8000:8000"
   backend:
