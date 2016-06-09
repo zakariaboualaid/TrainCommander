@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  trip_id: one
+  user_id: one
+  order_time: 2016-06-08 23:47:31
+
+two:
+  trip_id: two
+  user_id: two
+  order_time: 2016-06-08 23:47:31

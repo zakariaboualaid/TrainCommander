@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  departure_time: 2016-06-08 23:26:07
+  total_travel_time: 1
+  price: 1.5
+  train: one
+
+two:
+  departure_time: 2016-06-08 23:26:07
+  total_travel_time: 1
+  price: 1.5
+  train: two

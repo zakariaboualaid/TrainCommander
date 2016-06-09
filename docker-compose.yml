@@ -1,6 +1,16 @@
-version: "1"
+version: '2'
 services:
-	backend:
-		image: rails
-	frontend:
-		image: rails
+  frontend:
+    command: npm start
+    build: traincommander_webclient/.
+    volumes:
+     - ./traincommander_webclient/:/frontend
+    ports:
+      - "8000:8000"
+  backend:
+    build: traincommander_api/.
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - ./traincommander_api/:/backend
+    ports:
+      - "3000:3000"

@@ -9,6 +9,16 @@ module.exports = window.api = {
 		});
 	},
 
+	searchTrips: function(params) {
+		return fetch(apiUrl + "trips", {
+			data: params
+		})
+	},
+
+	makeOrder: function(trip_id, user_id) {
+		
+	},
+
 	getTrains: function () {
 		return fetch(apiUrl + "trains").then(function(response){
 			console.log(response);
