@@ -15,7 +15,7 @@
     ]);
 
   Trip.delete_all
-  trips = Trip.create([{id:1, departure_time: "08/06/2016 00:00:00", total_travel_time: 62315, price: 220, train_id: 1, from_id: 1, to_id: 3},
-    {id: 2, departure_time: "08/06/2016 00:00:00", total_travel_time: 33689, price: 220, train_id: 1, from_id: 2, to_id: 3},
-    {id: 3, departure_time: "09/06/2016 12:30:00", total_travel_time: 62315, price: 220, train_id: 1, from_id: 3, to_id: 1}
+  trips = Trip.create([{id:1, departure_time: "08/06/2016 00:00:00", total_travel_time: 2800, price: 20, train_id: 1, from_id: 1, to_id: 3},
+    {id: 2, departure_time: "08/06/2016 00:00:00", total_travel_time: 2500, price: 22, train_id: 1, from_id: 2, to_id: 3},
+    {id: 3, departure_time: "09/06/2016 12:30:00", total_travel_time: 5000, price: 30, train_id: 1, from_id: 3, to_id: 1}
     ]);

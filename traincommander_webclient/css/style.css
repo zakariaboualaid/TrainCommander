@@ -1,3 +1,11 @@
 * {
   margin: 0px;
   padding: 0px; }
+
+.bootstrap-datetimepicker-widget {
+  font-size: 11px !important; }
+
+table.search_trips_results.table.table-striped.table-condensed.table-hover {
+  font-size: 12px; }
+  table.search_trips_results.table.table-striped.table-condensed.table-hover td {
+    vertical-align: middle; }

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :stations
   root "trips#index"
   resources :orders
   devise_for :users
