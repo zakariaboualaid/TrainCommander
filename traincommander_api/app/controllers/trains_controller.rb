@@ -1,5 +1,6 @@
 class TrainsController < ApplicationController
   before_action :set_train, only: [:show, :update, :destroy]
+  skip_before_action :authenticate_request
 
   # GET /trains
   def index
