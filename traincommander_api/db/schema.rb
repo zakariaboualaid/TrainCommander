@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160610162612) do
+ActiveRecord::Schema.define(version: 20160611193020) do
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "trip_id_id"
-    t.integer  "user_id_id"
+    t.integer  "trip_id"
+    t.integer  "user_id"
     t.datetime "order_time"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.boolean  "valid"
-    t.index ["trip_id_id"], name: "index_orders_on_trip_id_id"
-    t.index ["user_id_id"], name: "index_orders_on_user_id_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.string   "transaction_id"
+    t.index ["trip_id"], name: "index_orders_on_trip_id"
+    t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
   create_table "stations", force: :cascade do |t|

@@ -1,5 +1,6 @@
 var Fetch = require('whatwg-fetch');
-var apiUrl = "http://localhost:3000/";
+var Functions = require('./functions');
+var apiUrl = "http://"+Functions.getHostname()+":3000/";
 
 module.exports = window.api = {
 
@@ -15,8 +16,39 @@ module.exports = window.api = {
 		})
 	},
 
-	makeOrder: function(trip_id, user_id) {
-		
+	makeOrder: function(payload) {
+		return fetch(apiUrl + "orders", {
+			method: "POST",
+			headers: {
+				'Accept': 'application/json',
+				"Authorization": $.cookie("tc_token"),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				trip_id: payload.trip_id,
+				email: payload.email,
+				transaction_id: payload.transaction_id
+			})
+		}).then(function(response){
+			return response.json();
+		});
+	},
+
+	sendPDF: function(trip_id, email) {
+		return fetch(apiUrl + "send_email", {
+			method: "POST",
+			headers: {
+				'Accept': 'application/json',
+				"Authorization": $.cookie("tc_token"),
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				trip_id: trip_id,
+				email: email
+			})
+		}).then(function(response){
+			return response.json();
+		});
 	},
 
 	getTrains: function () {
@@ -32,9 +64,19 @@ module.exports = window.api = {
 		}) ;
 	},
 
-	getWithParams: function(url, params) {
-		return $.get(url, params).done(function(data){
-			return data;	
-		})
+	getTripDetails: function (trip_id) {
+		return fetch(apiUrl + "trips/" + trip_id).then(function(response){
+			return response.json();
+		}) ;
+	},
+
+	getUserOrders: function() {
+		return fetch(apiUrl + "orders?user_email="+$.cookie("tc_current_user_email") , {
+			headers: {
+				"Authorization": $.cookie("tc_token")
+			}
+		}).then(function(response) {
+			return response.json()
+		});
 	}
 }

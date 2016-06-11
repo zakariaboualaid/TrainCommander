@@ -2,6 +2,7 @@
 # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
+  # Order.delete_all
   Train.delete_all
   trains = Train.create([{id: 1,name: "T1", city: "Casablanca", capacity: 300},
     {id: 2, name: "T2", city: "Rabat", capacity: 320},
@@ -20,5 +21,6 @@
     {id: 3, departure_time: "09/06/2016 12:30:00", total_travel_time: 5000, price: 30, train_id: 1, from_id: 3, to_id: 1}
     ]);
 
-  # User.delete_all
-  # User.create!(email: 'boulaidzac@gmail.com' , password: '153624' , password_confirmation: '153624')
+  User.delete_all
+  User.create!([{email: 'boulaidzac@gmail.com' , password: '153624' , password_confirmation: '153624'},
+    {email: 'user@test.com' , password: '153624' , password_confirmation: '153624'}])

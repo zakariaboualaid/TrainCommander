@@ -3,6 +3,7 @@ var Api = require('./utils/api')
 React.Bootstrap = require('react-bootstrap');
 var DateTimePicker = require('react-bootstrap-datetimepicker');
 var moment = require('moment');
+var Functions = require('./utils/functions');
 // React.Bootstrap.Select = require('react-bootstrap-select');
 
 module.exports = React.createClass({
@@ -16,12 +17,19 @@ module.exports = React.createClass({
 	},
 
 	apiGetData: function(){
-		Api.get("stations").then(function(data){
-			this.setState({stations: data})
-		}.bind(this))
 		Api.get("trips").then(function(data){
 			this.setState({trips: data})
 		}.bind(this))
+		Api.get("stations").then(function(data){
+			this.setState({stations: data})
+		}.bind(this))
+	},
+
+	componentWillUnmount: function() {
+	      alert("Bye!!")
+	},
+
+	componentDidMount: function(){
 	},
 
 	componentWillMount: function() {
@@ -31,7 +39,14 @@ module.exports = React.createClass({
 	searchTrips: function() {
 	},
 
-	buyTicket: function(){
+	startPaypalTransaction: function(){
+		var token = Functions.generateToken();
+		// $('<input>').attr({
+		// 	type: 'hidden',
+		// 	id: 'return',
+		// 	name: 'return',
+		// 	value: 'http://localhost:8000/success?trip_id='+trip.id+'&transaction='+token
+		// }).appendTo('#startPaypalTransaction');
 	},
 
 	results: function(){
@@ -54,14 +69,14 @@ module.exports = React.createClass({
 						<React.Bootstrap.Form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
 							<input type="hidden" name="cmd" value="_xclick"/>
 							<input type="hidden" name="business" value="boulaidzac-facilitator@gmail.com"/>
-							<input type="hidden" name="return" value="http://localhost:8000/success"/>
+							<input type="hidden" name="return" value={"http://"+Functions.getHost()+"/success"} />
 							<input type="hidden" name="currency_code" value="EUR"/>
-							 <input type="hidden" name="quantity" value="1"/>
+							<input type="hidden" name="quantity" value="1"/>
 							<input type="hidden" name="item_name" value={"Trip from " + trip.from.name + " to " + trip.to.name} />
 							<input type="hidden" name="item_number" value={trip.id}/>
 							<input type="hidden" name="amount" value={trip.price} />
 							<input type="hidden" name="hosted_button_id" value="PUXW2HB25RFP2"/>
-							<input type="image" src="../img/paypal_please.png" border="0" width="110px" name="submit" alt="PayPal - The safer, easier way to pay online!"/>
+							<input type="image" name="submit" src="../img/paypal_please.png" border="0" width="110px" alt="PayPal - The safer, easier way to pay online!"/>
 							<img alt="" border="0" src="../img/paypal_please.png" width="1" height="1"/>
 						</React.Bootstrap.Form>
 					</td>
@@ -85,7 +100,6 @@ module.exports = React.createClass({
 	},
 
 	render: function(){
-
 		var stations = this.state.stations.map(function(station){
 			return <option key={station.id} value={station.id}>{station.name}</option>
 		});

@@ -3,8 +3,12 @@ class OrdersController < ApplicationController
 
   # GET /orders
   def index
-    @orders = Order.all
-
+    if params["user_email"]
+      @user = User.find_by_email params["user_email"]
+      @orders = @user.orders
+    else
+      @orders = Order.all
+    end
     render json: @orders
   end
 
@@ -15,7 +19,12 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.new(order_params)
+    @order = Order.new
+    @user = User.find_by_email(params["email"])
+    @order.order_time = DateTime.now
+    @order.user = @user
+    @order.transaction_id = params["transaction_id"]
+    @order.trip_id = params["trip_id"]
 
     if @order.save
       render json: @order, status: :created, location: @order
@@ -46,6 +55,6 @@ class OrdersController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def order_params
-      params.require(:order).permit(:trip_id_id, :user_id_id, :order_time)
+      params.require(:order).permit(:trip_id, :email, :user)
     end
 end
