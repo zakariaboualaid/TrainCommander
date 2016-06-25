@@ -11,15 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160611193020) do
+ActiveRecord::Schema.define(version: 20160625181054) do
 
   create_table "orders", force: :cascade do |t|
     t.integer  "trip_id"
     t.integer  "user_id"
     t.datetime "order_time"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
     t.string   "transaction_id"
+    t.boolean  "processed",      default: false
     t.index ["trip_id"], name: "index_orders_on_trip_id"
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
@@ -57,6 +58,8 @@ ActiveRecord::Schema.define(version: 20160611193020) do
     t.string   "password_digest"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "name"
+    t.string   "sub"
   end
 
 end

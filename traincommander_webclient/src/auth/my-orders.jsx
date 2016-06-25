@@ -4,7 +4,16 @@ var Table = require('react-bootstrap/lib/table');
 var ReactRouter = require('react-router');
 var moment = require('moment');
 var browserHistory = ReactRouter.browserHistory;
+var OrderStore = require('../stores/orders-store');
+var Reflux = require('reflux');
+var Actions = require('../actions');
+var Ticket = require('../shared/ticket');
+
 module.exports = React.createClass({
+
+	mixins: [
+		Reflux.listenTo(OrderStore, 'onChange')
+	],
 
 	getInitialState:function() {
 	    return {
@@ -16,40 +25,53 @@ module.exports = React.createClass({
 		if($.cookie('tc_token') == null){
 			browserHistory.push('/')
 		} else {
-			// this.apiGetData()
+			Actions.getUserOrders();
 		}
 	},
 
-	componentDidMount: function() {
-		this.apiGetData()
+	onChange: function(event, orders) {
+		this.setState({orders: orders});
 	},
 
-	apiGetData: function() {
-		api.getUserOrders().then(function(data){
-			this.setState({orders: data})
-		}.bind(this));
+	printTicket: function(order) {
+		Ticket.buildTicket(order);
 	},
 
 	renderOrders: function() {
+		if(this.state.orders.length == 0)
+			return <p className="text-center">{"You don't have any order until now."}</p>
 		var orders = this.state.orders.map(function(order) {
 			var trip = order.trip
-			console.log(order)
-			return <tr key={order.id}>
-				<td>{order.transaction_id}</td>
-				<td>{}</td>
+			var order_time = moment(order.order_time).format("MMMM Do YYYY, h:mm:ss a")
+			var departure_time = moment(order.trip.departure_time).format("MMMM Do YYYY, h:mm:ss a")
+			return <tr id={order.id} key={order.id}>
+				<td><span style={{fontSize: "12px"}} className="badge">#{order.transaction_id}</span></td>
+				<td>{order.title}</td>
 				<td>{trip.price} EUR</td>
-				<td>{moment(order.order_time).format("dddd, MMMM Do YYYY, h:mm:ss a")}</td>
-				<td><a href="#" onClick={this.printTicket}>Print ticket</a></td>
+				<td>{order_time}</td>
+				<td>{departure_time}</td>
+				<td>
+					<div style={{display: ""}} className="btn-group orders-options">
+					  <button className="btn btn-default btn-xs dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					     <span style={{height: "10px", marginTop: "8px"}} className="caret"></span>
+					  </button>
+					  <ul className="dropdown-menu text-left">
+					    <li><a href="#" className="btn btn-link btn-xs" onClick={this.printTicket.bind(this, order)}>Print ticket</a></li>
+					    <li><a href="#" className="btn btn-link btn-xs" onClick={this.replicateTicket.bind(this, order)}>Replicate trip</a></li>
+					  </ul>
+					</div>
+				</td>
 			</tr>
-		});
-		return <div className=""><Table condensed={true} striped={true} hover={true} className="user_orders">
+		}.bind(this));
+		return <div className=""><Table condensed={false} striped={true} hover={true} className="user_orders">
 			<thead>
 				<tr>
 					<th>Transaction ID</th>
 					<th>Trip</th>
 					<th>Price</th>
 					<th>Order Time</th>
-					<th>Action</th>
+					<th>Departure Time</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>

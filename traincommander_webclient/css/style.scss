@@ -16,6 +16,10 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
 
+.orders-options .dropdown-menu a {
+  text-align: left;
+}
+
 .bootstrap-datetimepicker-widget {
 	font-size: 11px !important;
 }

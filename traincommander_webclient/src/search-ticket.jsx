@@ -4,9 +4,18 @@ React.Bootstrap = require('react-bootstrap');
 var DateTimePicker = require('react-bootstrap-datetimepicker');
 var moment = require('moment');
 var Functions = require('./utils/functions');
-// React.Bootstrap.Select = require('react-bootstrap-select');
+var TripStore = require('./stores/trips-store');
+var StationStore = require('./stores/stations-store');
+var Reflux = require('reflux');
+var Actions = require('./actions');
+// React.Bootstrap.SelectRei = require('react-bootstrap-select');
 
 module.exports = React.createClass({
+
+	mixins: [
+		Reflux.listenTo(TripStore, "onTripStoreChange"),
+		Reflux.listenTo(StationStore, "onStationStoreChange")
+	],
 
 	getInitialState: function() {
 		return {
@@ -16,45 +25,49 @@ module.exports = React.createClass({
 		};
 	},
 
-	apiGetData: function(){
-		Api.get("trips").then(function(data){
-			this.setState({trips: data})
-		}.bind(this))
-		Api.get("stations").then(function(data){
-			this.setState({stations: data})
-		}.bind(this))
-	},
-
-	componentWillUnmount: function() {
-	      alert("Bye!!")
-	},
-
-	componentDidMount: function(){
-	},
-
 	componentWillMount: function() {
-		this.apiGetData()
+		this.setState({loading: true});
+		Actions.getAllTrips();
+		Actions.getStations();
+	},
+
+	onTripStoreChange: function(event, trips) {
+		this.setState({trips: trips});
+		this.setState({loading: false});
+	},
+
+	onStationStoreChange: function(event, stations) {
+		this.setState({stations: stations});
+	},
+
+	searchFromChanged: function() {
+		var val = $("select#search_departure_station").val();
+		$("select#search_arrival_station").selectedIndex = 0;
+		$("select#search_arrival_station option").each(function(option){
+			if(option == val) {
+				$(this).attr("disabled", true);
+			} else { $(this).attr("disabled", false); }
+		})
 	},
 
 	searchTrips: function() {
+		this.setState({loading: true});
+		console.log("Searching trips : " + $("#search_trips_form").serialize());
+		Actions.getTrips($("#search_trips_form").serialize());
 	},
 
 	startPaypalTransaction: function(){
 		var token = Functions.generateToken();
-		// $('<input>').attr({
-		// 	type: 'hidden',
-		// 	id: 'return',
-		// 	name: 'return',
-		// 	value: 'http://localhost:8000/success?trip_id='+trip.id+'&transaction='+token
-		// }).appendTo('#startPaypalTransaction');
+		alert("cool")
 	},
 
 	results: function(){
-		if(this.state.trips.length == 0) {
-			return <h4>Search for a ticket</h4>
-		} else {
+		if(this.state.loading) return <h4>Loading...</h4>
+		if(this.state.error != null) return <h4>{this.state.error}</h4>
+		if(this.state.trips.length == 0)
+			return <h4>No trips available for the moment.</h4>
+		else
 			return this.returnTripsTable()
-		}
 	},
 
 	returnTripsTable: function(){
@@ -63,10 +76,10 @@ module.exports = React.createClass({
 					<td>{trip.train.name}</td>
 					<td>{trip.from.name}</td>
 					<td>{trip.to.name}</td>
-					<td>{moment(trip.departure_time).format("ddd, hA")}</td>
+					<td>{moment(trip.departure_time).format("ddd, D MMM YYYY | h:mm a")}</td>
 					<td>{moment.duration(parseInt(trip.total_travel_time), "seconds").humanize()}</td>
-					<td>	
-						<React.Bootstrap.Form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<td>
+						<React.Bootstrap.Form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
 							<input type="hidden" name="cmd" value="_xclick"/>
 							<input type="hidden" name="business" value="boulaidzac-facilitator@gmail.com"/>
 							<input type="hidden" name="return" value={"http://"+Functions.getHost()+"/success"} />
@@ -109,38 +122,40 @@ module.exports = React.createClass({
 				<div role="panel" className="panel panel-default">
 					<div className="panel-heading">Search a ticket</div>
 					<div className="panel-body">
-						<form className="search_trips_form" style={{fontSize: '.8em'}}>
+						<form onChange={this.searchFromChanged} id="search_trips_form" className="search_trips_form" style={{fontSize: '.8em'}}>
 
 							<React.Bootstrap.FormGroup controlId="date" bsSize="small" className="">
 								<React.Bootstrap.ControlLabel>Departure Date</React.Bootstrap.ControlLabel>
-								<DateTimePicker id="date" mode="date"  />
+								<DateTimePicker id="date" minDate={moment()} inputFormat="ddd, D MMM YYYY" inputProps={{name: "date"}} mode="date"  />
 							</React.Bootstrap.FormGroup>
 
 							<React.Bootstrap.FormGroup controlId="time" bsSize="small" className="col-md-6">
 								<React.Bootstrap.ControlLabel>Between</React.Bootstrap.ControlLabel>
-								<DateTimePicker id="time" mode="time"  />
+								<DateTimePicker class="time" inputFormat="hh:mm a" defaultText={moment().add(1, "hours").format("hh:00 a")} inputProps={{name: "between"}} mode="time"  />
 							</React.Bootstrap.FormGroup>
 
 							<React.Bootstrap.FormGroup controlId="time" bsSize="small" className="col-md-6">
 								<React.Bootstrap.ControlLabel>And</React.Bootstrap.ControlLabel>
-								<DateTimePicker id="time" mode="time"  />
+								<DateTimePicker class="time" inputFormat="hh:mm a" defaultText={moment().add(2, "hours").format("hh:00 a")} inputProps={{name: "and"}} mode="time"  />
 							</React.Bootstrap.FormGroup>
 
 							<React.Bootstrap.FormGroup bsSize="small" className="">
 								<React.Bootstrap.ControlLabel for="departure">Departure Station</React.Bootstrap.ControlLabel>
-								<React.Bootstrap.FormControl componentClass="select">
+								<React.Bootstrap.FormControl name="from" id="search_departure_station" onChange={this.stationChanged} componentClass="select">
+									<option>Select a station</option>
 									{stations}
 								</React.Bootstrap.FormControl>
 							</React.Bootstrap.FormGroup>
 
 							<React.Bootstrap.FormGroup bsSize="small" className="">
 								<React.Bootstrap.ControlLabel for="arrival">Arrival Station</React.Bootstrap.ControlLabel>
-								<React.Bootstrap.FormControl componentClass="select">
+								<React.Bootstrap.FormControl name="to" id="search_arrival_station" onChange={this.stationChanged} componentClass="select">
+									<option selected disabled>Select a station</option>
 									{stations}
 								</React.Bootstrap.FormControl>
 							</React.Bootstrap.FormGroup>
 
-							<React.Bootstrap.Button onClick={this.searchTrips} type="button" bsStyle="default">Search</React.Bootstrap.Button>
+							<React.Bootstrap.Button onClick={this.searchTrips} type="button" bsStyle="success">Search</React.Bootstrap.Button>
 						</form>
 					</div>
 				</div>

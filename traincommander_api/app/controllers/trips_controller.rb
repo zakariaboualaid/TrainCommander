@@ -4,7 +4,14 @@ class TripsController < ApplicationController
 
   # GET /trips
   def index
-    @trips = Trip.all
+    if params["from"] and params["to"]
+      date = params["date"].to_date.strftime("%Y-%m-%d")
+      between = params["between"].to_time.strftime("%T")
+      aand = params["and"].to_time.strftime("%T")
+      @trips = Trip.where("DATE(departure_time) = ? and from_id = ? and to_id = ? and TIME(departure_time) between ? and ?", date, params["from"], params["to"], between, aand)
+    else
+      @trips = Trip.all
+    end
 
     render json: @trips
   end

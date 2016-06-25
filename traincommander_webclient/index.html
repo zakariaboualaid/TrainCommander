@@ -3,6 +3,7 @@
 	<head>
 		<script src="js/jquery-1.12.4.min.js"></script>
 		<link	rel="stylesheet" href="css/bootstrap.min.css">
+		<meta name="google-signin-client_id" content="198477065196-g228hjcc33v05iv9c5s5lmh7bd6kmv8h.apps.googleusercontent.com">
 		<link	rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
 		<link	rel="stylesheet" href="node_modules/sweetalert/dist/sweetalert.css">
 		<link	rel="stylesheet" href="css/style.css">
@@ -12,12 +13,20 @@
 	</head>
 
 	<body>
+	<script>
+
+	</script>
 		<div class="tc-content">
-			
 		</div>
 		<script src="js/bootstrap.min.js"></script>
 		<script src="node_modules/jquery.cookie/jquery.cookie.js"></script>
 		<script src="main.js"></script>
+		<script src="https://apis.google.com/js/platform.js?onload=triggerGoogleLoaded" async defer></script>
+		<script type="text/javascript">
+		  function triggerGoogleLoaded() {
+		    window.dispatchEvent(new Event('google-loaded'));
+		  }
+		</script>
 	</body>
 
 </html>

@@ -26,6 +26,8 @@ module TraincommanderApi
 
     config.action_mailer.perform_deliveries = true
 
+    config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
     config.action_mailer.delivery_method = :smtp
     # SMTP settings for gmail
     config.action_mailer.smtp_settings = {

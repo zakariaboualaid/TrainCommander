@@ -16,9 +16,6 @@ module.exports = React.createClass({
 	    };
 	},
 
-	componentDidMount: function() {
-	},
-
 	activeLink: function(path){
 		return (path === this.props.pathname) ? true : false
 	},
@@ -26,7 +23,19 @@ module.exports = React.createClass({
 	logout: function() {
 		$.removeCookie('tc_token');
 		$.removeCookie('tc_current_user_email');
-		browserHistory.push('search');
+		$.removeCookie('tc_current_user_name');
+		if($.cookie('tc_current_auth') == "google"){
+			var auth2 = gapi.auth2.getAuthInstance();
+			auth2.signOut().then(function(){
+	      		console.log('User signed out.');
+	    	});
+			$.removeCookie('tc_current_auth');
+		}
+		if($.cookie('tc_current_auth') == "fb"){
+			FB.logout();
+			$.removeCookie('tc_current_auth');
+		}
+		browserHistory.push('/search');
 	},
 
 	navRight: function(){
@@ -37,8 +46,9 @@ module.exports = React.createClass({
 			</Nav>
 		} else {
 			email_user = $.cookie("tc_current_user_email")
+			name_user = $.cookie("tc_current_user_name")
 			return <Nav pullRight>
-			<NavItem><span>Welcome, {email_user}</span></NavItem>
+			<NavItem><span>Guten tag, {name_user}</span></NavItem>
 			<NavItem href="/my-orders" active={this.activeLink("/my-orders")} eventKey={1}>My Orders</NavItem>
 			<NavItem onClick={this.logout} eventKey={2}>Logout</NavItem></Nav>
 		}

@@ -3,12 +3,14 @@ var Api = require('./utils/api');
 var Fetch = require('whatwg-fetch');
 var moment = require('moment');
 var Functions = require('./utils/functions');
+var Ticket = require('./shared/ticket');
 
 module.exports = React.createClass({
 
 	getInitialState: function() {
 	    return {
 	          trip: {},
+	          order: {},
 	          from: {},
 	          to: {},
 	          train: {},
@@ -44,18 +46,18 @@ module.exports = React.createClass({
 	},
 
 	makeOrder: function(trip_id, email) {
-		console.log("Sending email with PDF");
-		Api.makeOrder(trip_id, email);
+		Api.makeOrder(trip_id, email).then(function(data){
+			this.setState({order: data});
+		}.bind(this));
 	},
 
 	printTicket: function() {
-		var content = document.getElementById("ticket");
-		var pri = document.getElementById("ifmcontentstoprint").contentWindow;
-		pri.document.open();
-		pri.document.write(content.innerHTML);
-		pri.document.close();
-		pri.focus();
-		pri.print();
+		if(this.state.order){
+			console.log(this.state.order)
+			Ticket.buildTicket(this.state.order);
+		} else {
+			alert("Error occured, contact admins.");
+		}
 	},
 
 	proceedTransaction: function() {

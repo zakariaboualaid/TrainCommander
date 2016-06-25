@@ -4,7 +4,7 @@ services:
     command: npm start
     build: traincommander_webclient/.
     ports:
-      - "8000:8000"
+      - "8000:80"
   backend:
     build: traincommander_api/.
     command: puma -e production
