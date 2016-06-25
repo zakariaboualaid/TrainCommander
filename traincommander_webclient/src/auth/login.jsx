@@ -10,7 +10,7 @@ module.exports = React.createClass({
 		e.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:3000/authenticate?"+$("form.login-form").serialize(),
+			url: "http://"+Functions.getHostname()+":3000/authenticate?"+$("form.login-form").serialize(),
 			success: function(data) {
 				console.log("success !")
 				console.log(data)
@@ -83,7 +83,7 @@ module.exports = React.createClass({
 	registerFBUser: function(sub, name, email) {
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:3000/registerguser",
+			url: "http://"+Functions.getHostname()+":3000/registerguser",
 			data: {
 				sub: sub, name: name, email: email
 			},
@@ -129,7 +129,7 @@ module.exports = React.createClass({
 		function registerGoogleUser(sub, name, email) {
 			$.ajax({
 				type: "POST",
-				url: "http://localhost:3000/registerguser",
+				url: "http://"+Functions.getHostname()+":3000/registerguser",
 				data: {
 					sub: sub, name: name, email: email
 				},

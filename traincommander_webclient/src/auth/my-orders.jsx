@@ -37,9 +37,14 @@ module.exports = React.createClass({
 		Ticket.buildTicket(order);
 	},
 
+	replicateTicket: function(order) {
+		console.log(order);
+	},
+
 	renderOrders: function() {
-		if(this.state.orders.length == 0)
+		if(this.state.orders.length == 0){
 			return <p className="text-center">{"You don't have any order until now."}</p>
+		}
 		var orders = this.state.orders.map(function(order) {
 			var trip = order.trip
 			var order_time = moment(order.order_time).format("MMMM Do YYYY, h:mm:ss a")
