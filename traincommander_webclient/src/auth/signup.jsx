@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactRouter = require('react-router');
+var Functions = require('../utils/functions');
 var browserHistory = ReactRouter.browserHistory;
 
 module.exports = React.createClass({
@@ -8,7 +9,7 @@ module.exports = React.createClass({
 		e.preventDefault();
 		$.ajax({
 			type: "POST",
-			url: "http://localhost:3000/users/?"+$("form.register-form").serialize(),
+			url: "http://"+Functions.getHostname()+":3000/users/?"+$("form.register-form").serialize(),
 			success: function(data) {
 				console.log("success !")
 				console.log(data)
