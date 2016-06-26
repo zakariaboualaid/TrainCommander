@@ -1,4 +1,13 @@
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+@font-face {
+  font-family: "Roboto";
+  font-weight: normal;
+  src: url(../fonts/Roboto-Regular.ttf); }
+
+@font-face {
+  font-family: "Bilbo";
+  font-weight: normal;
+  src: url(../fonts/BilboSwashCaps-Regular.ttf); }
+
 * {
   margin: 0px;
   padding: 0px; }
@@ -6,19 +15,76 @@
 body {
   background: #76b852;
   /* fallback for old browsers */
-  background: -webkit-linear-gradient(right, #76b852, #8DC26F);
-  background: -moz-linear-gradient(right, #76b852, #8DC26F);
-  background: -o-linear-gradient(right, #76b852, #8DC26F);
-  background: linear-gradient(to left, #76b852, #8DC26F);
+  background: -webkit-linear-gradient(right, #76b852, #76b852);
+  background: -moz-linear-gradient(right, #76b852, #76b852);
+  background: -o-linear-gradient(right, #76b852, #76b852);
+  background: linear-gradient(to left, #76b852, #76b852);
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; }
+
+.search_ticket_panel {
+  padding-left: 0px; }
+
+.list_trips_panel {
+  padding-right: 0px; }
+
+.list_orders_panel {
+  padding-left: 0px;
+  padding-right: 0px; }
+
+.navbar-default {
+  background: #76b852;
+  border-color: #76b852; }
+
+.navbar-default .navbar-nav > .active > a {
+  color: white; }
+
+.navbar-default .navbar-nav > li > a {
+  color: white; }
+
+.navbar-default .navbar-nav > .active > a {
+  color: white;
+  font-weight: bold;
+  background-color: #76b852; }
+
+.navbar-default .navbar-nav > li > a:focus, .navbar-default .navbar-nav > li > a:hover {
+  color: white; }
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+  background-color: #76b852;
+  color: white; }
+
+.navbar-default .navbar-brand {
+  color: white;
+  font-family: "Bilbo";
+  font-size: 28px; 
+}
 
 .orders-options .dropdown-menu a {
   text-align: left; }
 
 .bootstrap-datetimepicker-widget {
   font-size: 11px !important; }
+
+.fb_button {
+  cursor: pointer;
+  background: #FFFFFF;
+  width: 270px;
+  display: inline-block;
+  height: 50px;
+  box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.25);
+  font-family: Roboto;
+  font-size: 16px;
+  font-weight: 500;
+  color: #7A7A7A;
+  line-height: 16px; }
+  .fb_button .fb_icon_content {
+    font-size: 16px;
+    line-height: 48px; }
+  .fb_button:hover {
+    box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.25);
+    font-family: Roboto; }
 
 table.search_trips_results, table.user_orders {
   font-size: 12px; }

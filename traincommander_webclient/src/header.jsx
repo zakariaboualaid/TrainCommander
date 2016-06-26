@@ -58,7 +58,7 @@ module.exports = React.createClass({
 		return <Navbar staticTop={true} inverse={false}>
 			<Navbar.Header>
 				<Navbar.Brand>
-					<a href="#">Train Commander</a>
+					<a href="/">Train Commander</a>
 				</Navbar.Brand>
 				<Navbar.Toggle />
 			</Navbar.Header>

@@ -162,7 +162,15 @@ module.exports = React.createClass({
 				<button onClick={this.authenticate}>login</button>
 				<br/><br/>
 				<div id="g-signin2"></div>
-				<a href="#" onClick={this.handleClick}><img style={{paddingTop: "10px"}} width="270" height="70" src="../../img/fb_button.png" /> </a>
+				<br/>
+				 <div onClick={this.handleClick} className="fb_button">
+				 	<div className="fb_icon" style={{padding: "15px", float: "left"}}>
+				 		<img width="23" height="23" src="../../img/fb_icon.svg" />
+				 	</div>
+				 	<span className="fb_icon_content">
+				 		Sign in with Facebook
+				 	</span>
+				 </div>
 				<p className="message">Not registered? <a href="/signup">Create an account</a></p>
 			</form>
 		 </div>

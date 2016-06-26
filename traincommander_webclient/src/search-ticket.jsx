@@ -118,7 +118,7 @@ module.exports = React.createClass({
 		});
 
 		return <div>
-			<div className="col-md-4" style = {{textAlign: ""}}>
+			<div className="col-md-4 search_ticket_panel" style = {{textAlign: ""}}>
 				<div role="panel" className="panel panel-default">
 					<div className="panel-heading">Search a ticket</div>
 					<div className="panel-body">
@@ -160,7 +160,7 @@ module.exports = React.createClass({
 					</div>
 				</div>
 			</div>
-			<div className="col-md-8">
+			<div className="col-md-8 list_trips_panel">
 				<div role="panel" className="panel panel-default">
 					<div className="panel-heading">Available Trips</div>
 					<div className="panel-body">

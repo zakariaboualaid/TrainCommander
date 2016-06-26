@@ -6,7 +6,6 @@ module.exports = React.createClass({
 
 	componentDidMount: function() {
 		// window.addEventListener('google-loaded',this.googleSignOut);
-
 		window.fbAsyncInit = function() {
 			FB.init({
 				appId      : '743131102456956',

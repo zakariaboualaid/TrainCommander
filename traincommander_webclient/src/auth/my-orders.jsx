@@ -3,6 +3,7 @@ React.Bootstrap = require('react-bootstrap');
 var Table = require('react-bootstrap/lib/table');
 var ReactRouter = require('react-router');
 var moment = require('moment');
+var Functions = require('../utils/functions')
 var browserHistory = ReactRouter.browserHistory;
 var OrderStore = require('../stores/orders-store');
 var Reflux = require('reflux');
@@ -37,8 +38,8 @@ module.exports = React.createClass({
 		Ticket.buildTicket(order);
 	},
 
-	replicateTicket: function(order) {
-		console.log(order);
+	submitReplicateTrip: function(order) {
+		$(".form_replicate_trip").submit();
 	},
 
 	renderOrders: function() {
@@ -62,7 +63,21 @@ module.exports = React.createClass({
 					  </button>
 					  <ul className="dropdown-menu text-left">
 					    <li><a href="#" className="btn btn-link btn-xs" onClick={this.printTicket.bind(this, order)}>Print ticket</a></li>
-					    <li><a href="#" className="btn btn-link btn-xs" onClick={this.replicateTicket.bind(this, order)}>Replicate trip</a></li>
+					    <li>
+						<React.Bootstrap.Form className="form_replicate_trip" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+							<input type="hidden" name="cmd" value="_xclick"/>
+							<input type="hidden" name="business" value="boulaidzac-facilitator@gmail.com"/>
+							<input type="hidden" name="return" value={"http://"+Functions.getHost()+"/success"} />
+							<input type="hidden" name="currency_code" value="EUR"/>
+							<input type="hidden" name="quantity" value="1"/>
+							<input type="hidden" name="item_name" value={order.title} />
+							<input type="hidden" name="item_number" value={trip.id}/>
+							<input type="hidden" name="amount" value={trip.price} />
+							<input type="hidden" name="hosted_button_id" value="PUXW2HB25RFP2"/>
+							<img alt="" border="0" src="../img/paypal_please.png" width="1" height="1"/>
+						</React.Bootstrap.Form>
+						<a href="#" onClick={this.submitReplicateTrip} className="btn btn-link btn-xs">Replicate trip</a>
+						</li>
 					  </ul>
 					</div>
 				</td>
@@ -87,7 +102,7 @@ module.exports = React.createClass({
 	},
 
     render: function() {
-		return <div className="col-md-12"><div className="panel panel-default">
+		return <div className="col-md-12 list_orders_panel"><div className="panel panel-default">
 			<div className="panel-heading">My Orders</div>
 			<div className="panel-body">
 				{this.renderOrders()}
