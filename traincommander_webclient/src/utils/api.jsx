@@ -30,32 +30,13 @@ module.exports = window.api = {
 		})
 	},
 
-	makeOrder: function(payload) {
+	initiateOrder: function(trip_id) {
+		email = $.cookie('tc_current_user_email');
 		return fetch(apiUrl + "orders", {
 			method: "POST",
 			headers: {
+				// "Authorization": $.cookie("tc_token"),
 				'Accept': 'application/json',
-				"Authorization": $.cookie("tc_token"),
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
-				trip_id: payload.trip_id,
-				email: payload.email,
-				transaction_id: payload.transaction_id,
-				processed: true
-			})
-		}).then(function(response){
-			return response.json();
-		});
-	},
-
-	sendPDF: function(trip_id, email) {
-		console.log($.cookie("tc_token"))
-		return fetch(apiUrl + "send_email", {
-			method: "POST",
-			headers: {
-				'Accept': 'application/json',
-				"Authorization": $.cookie("tc_token"),
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({
@@ -66,6 +47,41 @@ module.exports = window.api = {
 			return response.json();
 		});
 	},
+
+	confirmOrder: function(payload) {
+		console.log("Confirming order...");
+		return fetch(apiUrl + "confirm_order", {
+			method: "POST",
+			headers: {
+				// "Authorization": $.cookie("tc_token"),
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				trip_id: payload.trip_id,
+				email: payload.email,
+				transaction_id: payload.transaction_id,
+				order_id: payload.order_id
+			})
+		}).then(function(response){
+			return response.json();
+		});
+	},
+
+	// sendPDF: function(trip_id, email) {
+	// 	console.log("Token : " + $.cookie("tc_token"))
+	// 	return fetch(apiUrl + "send_email", {
+	// 		method: "POST",
+	// 		headers: {
+	// 			"Authorization": $.cookie("tc_token")
+	// 		},
+	// 		body: JSON.stringify({
+	// 			email: email, trip_id: trip_id
+	// 		})
+	// 	}).then(function(response){
+	// 		return response.json();
+	// 	});
+	// },
 
 	getTrains: function () {
 		return fetch(apiUrl + "trains").then(function(response){

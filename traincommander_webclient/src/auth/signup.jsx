@@ -35,7 +35,7 @@ module.exports = React.createClass({
 	},
 
 	render: function() {
-		return <div className="form">
+		return <div className="form register-form-wrap">
 			<form className="register-form">
 				<input type="text" name="user[name]" placeholder="Name"/>
 				<input type="text" name="user[email]" placeholder="Email address"/>

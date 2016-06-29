@@ -15,12 +15,14 @@
 	padding: 0px;
 }
 
-$bg-green: #76b852;
+$bg-green: #D3E982;
 $bg-color: $bg-green;
 $bg-header: $bg-green;
+$dark-text: #2B3C43;
 
 body {
   background: $bg-color; /* fallback for old browsers */
+  color:$dark-text;
   background: -webkit-linear-gradient(right, $bg-color, $bg-color);
   background: -moz-linear-gradient(right, $bg-color, $bg-color);
   background: -o-linear-gradient(right, $bg-color, $bg-color);
@@ -30,17 +32,54 @@ body {
   -moz-osx-font-smoothing: grayscale;      
 }
 
+.label-success {
+  background-color: $bg-green;
+  color:$dark-text;
+}
+
+.btn-success {
+  background-color: $bg-green;
+  color: $dark-text;
+  border: none;
+  &:hover {
+    background: $bg-green;
+    color: $dark-text;
+  }
+}
+
 .search_ticket_panel {
-  padding-left: 0px;
+  margin-left: 0px;
 }
 
 .list_trips_panel {
-  padding-right: 0px;
+  margin-right: 0px;
+}
+
+.search_ticket_panel .panel{
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.list_trips_panel .panel {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 .list_orders_panel {
-  padding-left: 0px;
-  padding-right: 0px;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.list_orders_panel .panel {
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+@media screen and (max-width: 975px) {
+  .search_ticket_panel {
+    padding-left: 15px;
+  }
+
+  .list_trips_panel {
+    padding-right: 15px;
+  }
 }
 
 .navbar-default {
@@ -50,31 +89,37 @@ body {
 
 .navbar-default .navbar-nav>.active>a {
   color:white;
+  color:#2B3C43;
 }
 
 .navbar-default .navbar-nav>li>a {
   color:white;
+  color:#2B3C43;
 }
 
 .navbar-default .navbar-nav > .active > a{
   color: white;
   font-weight: bold;
   background-color:$bg-header;
+  color:#2B3C43;
 }
 
 .navbar-default .navbar-nav>li>a:focus, .navbar-default .navbar-nav>li>a:hover{
   color:white;
+  color:#2B3C43;
 }
 
 .navbar-default .navbar-nav>.active>a, .navbar-default .navbar-nav>.active>a:focus, .navbar-default .navbar-nav>.active>a:hover {
   background-color: $bg-header;
   color:white;
+  color:#2B3C43;
 }
 
 .navbar-default .navbar-brand{
   color:white;
   font-family: "Bilbo";
   font-size: 26px;
+  color:#2B3C43;
 }
 
 .orders-options .dropdown-menu a {
@@ -107,6 +152,10 @@ body {
   }
 }
 
+.login-form-wrap, .register-form-wrap {
+  margin-top: 40px !important;
+}
+
 table.search_trips_results, table.user_orders {
 	font-size: 12px;
 	td{
@@ -120,6 +169,7 @@ table.search_trips_results, table.user_orders {
   margin: auto;
 }
 .form {
+  border-radius: 4px;
   position: relative;
   z-index: 1;
   background: #FFFFFF;
@@ -144,18 +194,17 @@ table.search_trips_results, table.user_orders {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #4CAF50;
+  background: $bg-green;
   width: 100%;
   border: 0;
   padding: 15px;
-  color: #FFFFFF;
+  color: $dark-text;
   font-size: 14px;
   -webkit-transition: all 0.3 ease;
   transition: all 0.3 ease;
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: #43A047;
 }
 .form .message {
   margin: 15px 0 0;
@@ -163,7 +212,8 @@ table.search_trips_results, table.user_orders {
   font-size: 12px;
 }
 .form .message a {
-  color: #4CAF50;
+  color: $dark-text;
+  font-weight: bold;
   text-decoration: none;
 }
 .form .register-form {

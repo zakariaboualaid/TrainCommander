@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :stations
   root "trips#index"
   resources :orders
+  post 'confirm_order', to: 'orders#confirm'
   resources :trips
   resources :trains
   resources :users

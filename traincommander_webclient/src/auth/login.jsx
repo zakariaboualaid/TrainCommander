@@ -155,7 +155,7 @@ module.exports = React.createClass({
 	},
 
 	render: function() {
-		return <div className="form">
+		return <div className="form login-form-wrap">
 			<form className="login-form">
 				<input type="email" placeholder="Email" name="email"/>
 				<input type="password" placeholder="Password" name="password"/>

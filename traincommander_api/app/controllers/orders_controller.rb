@@ -19,25 +19,48 @@ class OrdersController < ApplicationController
 
   # POST /orders
   def create
-    @order = Order.find_by_transaction_id(params["transaction_id"]) || Order.new
+    @order = Order.new
+    @user = User.find_by_email(params["email"])
+    @order.user = @user if @user
+    @order.order_time = DateTime.now
+    @order.trip_id = params["trip_id"]
+    @order.processed = false
 
-    if !@order.processed
-      @user = User.find_by_email(params["email"])
-      @order.order_time = DateTime.now
-      @order.user = @user
-      @order.transaction_id = params["transaction_id"]
-      @order.trip_id = params["trip_id"]
-      @order.processed = true
-
-      if @order.save
-        @trip = @order.trip
-        render json: @order, status: :created, location: @order
-      else
-        render json: @order.errors, status: :unprocessable_entity
-      end
+    if @order.save
+      @trip = @order.trip
+      render json: @order, status: :created, location: @order
     else
-      render json: @order
+      render json: @order.errors, status: :unprocessable_entity
     end
+  end
+
+  def confirm
+    if params["order_id"] and params["transaction_id"]
+      @order = Order.find(params["order_id"])
+      logger.info "HEEEREEE !!"
+      logger.info @order.inspect
+      if @order and !@order.processed
+        @order.transaction_id = params["transaction_id"]
+        @order.processed = true
+        logger.info "Saved Order"
+        if @order.save
+          # Sending mail
+          logger.info "Params : #{params["email"].inspect}"
+          @user = User.find_by_email(params["email"])
+          logger.info "User : #{@user}"
+          logger.info "Sending email" if @user
+          UserMailer.confirmation_pdf(@user).deliver if @user
+
+          @trip = @order.trip
+          render json: @order, status: :created, location: @order
+        else
+          render json: @order.errors, status: :unprocessable_entity
+        end
+      end
+
+    end
+
+
   end
 
   # PATCH/PUT /orders/1

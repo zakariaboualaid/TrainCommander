@@ -3,8 +3,8 @@ var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
 var IndexRedirect = ReactRouter.IndexRedirect;
-var Main = require('./main');
 var browserHistory = ReactRouter.browserHistory;
+var Main = require('./main');
 
 var SearchTicket = require('./search-ticket');
 var OrderTrip = require('./order-trip');
@@ -15,7 +15,7 @@ var NotFound = require('./not-found');
 var MyOrders = require('./auth/my-orders');
 
 module.exports = (
-	<Router  history={browserHistory}>
+	<Router history={browserHistory}>
 		<Route path="/" component={Main}>
 			<IndexRedirect to="/search" />
 			<Route path="/search" component={SearchTicket} />

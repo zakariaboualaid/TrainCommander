@@ -3,6 +3,10 @@ class UsersController < ApplicationController
   skip_before_action :authenticate_request, only: :create
 
   def send_email
+    logger.info "Params : #{params.permit(:email)["email"].inspect}"
+    @user = User.find_by_email(params.permit(:email)["email"])
+    logger.info "User : #{@user}"
+    logger.info "Sending email" if @user
     UserMailer.confirmation_pdf(@user).deliver if @user
   end
 
@@ -23,7 +27,7 @@ class UsersController < ApplicationController
 
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    params.require(:user).permit(:name, :email, :password, :password_confirmation, :trip_id)
   end
 
 end

@@ -18,10 +18,6 @@ module.exports = React.createClass({
 	    };
 	},
 
-	currentUserSignedIn: function(){
-		return ($.cookie("tc_token") != null && $.cookie("tc_current_user_email") != null)
-	},
-
 	componentDidMount:function() {
 		if(this.props.location.query.item_number != null && this.props.location.query.tx != null){
 			this.setState({transaction_id: this.props.location.query.tx})
@@ -32,7 +28,7 @@ module.exports = React.createClass({
 			}
 			Api.getTripDetails(payload.trip_id).then(function(data){
 				this.setState({trip: data, from: data.from, to: data.to, train: data.train})
-				if(this.currentUserSignedIn()){
+				if(Functions.currentUserSignedIn()){
 					this.makeOrder(payload);
 					this.sendEmailWithPDF(payload);
 				}
